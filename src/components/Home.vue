@@ -1,35 +1,37 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    
+    <Navbar boughtby="home"/>
+    <h1>{{ name }}</h1>
   </div>
 </template>
 
 <script>
+import Navbar from './Navbar';
+
 export default {
   name: 'Home',
   components: {
     Navbar,
   },
-  props: {
-    token: String,
-  },
   data() {
     return {
-      msg: String,
+      err_msg: '',
+      name: '',
+      storetoken: '',
     }
   },
   methods: {
     verify: function() {
-      fetch('http://localhost:3000/posts/', {
+      console.log(this.token);
+      fetch('http://192.168.1.33:3000/posts/', {
         headers: {
-          'auth-token': this.token,
+          'auth-token': this.storetoken,
           'Content-type': 'application/json',
         },  
       })
+        .then(response => response.json())
         .then(response => {
-          console.log(response);
-          
+          this.name = response[0].name;
           if (response.status === 401) {
             this.msg = 'Not authorized';
           }
@@ -41,25 +43,16 @@ export default {
     }
   }, 
   beforeMount() {
-    this.verify();
+    this.storetoken = window.localStorage.getItem("token");
+    if (this.storetoken)
+      this.verify(); 
+    else 
+      this.$router.push('/login');
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>

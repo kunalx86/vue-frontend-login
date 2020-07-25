@@ -1,8 +1,8 @@
 <template>
   <div class="router">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button
+      <a class="navbar-brand" href="#">Auth</a>
+      <!-- <button
         class="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -12,24 +12,20 @@
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </button>-->
 
-      <div class="collapse navbar-collapse" id="navbarColor02">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">
+      <div class="navbar-collapse nav-list" id="navbarColor02">
+        <ul class="navbar-nav">
+          <li class="nav-item" v-bind:class="{ active: boughtby == 'home' }">
+            <router-link class="nav-link" to="/">
               Home
-              <span class="sr-only">(current)</span>
-            </a>
+            </router-link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Login</a>
+          <li class="nav-item" v-bind:class="{ active: boughtby == 'login' }">
+            <router-link class="nav-link" to="/login">Login</router-link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Signup</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+          <li class="nav-item" v-bind:class="{ active: boughtby == 'signup' }">
+            <router-link class="nav-link" to="/signup">Signup</router-link>
           </li>
         </ul>
       </div>
@@ -40,9 +36,18 @@
 <script>
 export default {
   name: "Navbar",
-  components: {}
+  components: {},
+  props: {
+    boughtby: String,
+  }
 };
 </script>
 
 <style scoped>
+@media screen and (max-width: 600px) {
+  .nav-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
 </style>
