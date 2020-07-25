@@ -1,4 +1,6 @@
-# hello-world
+# VUE Frontend for login
+
+## This serves as a boilerplate for a Vue project with Login, Register routes
 
 ## Project setup
 ```
